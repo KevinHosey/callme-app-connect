@@ -36,8 +36,8 @@ commands:
             echo "-----------------------------------------------------------------------------------"
             ssh -t -o StrictHostKeyChecking=no ec2-user@<<parameters.server_hostname>> \
               "cd /home/ec2-user/docker && \
-               docker-compose -f docker-compose.yml pull docker-web_app-1 && \
-               docker-compose -f docker-compose.yml up --no-deps -d docker-web_app-1"
+               docker-compose -f docker-compose.yml pull web_app && \
+               docker-compose -f docker-compose.yml up --no-deps -d web_app"
 jobs:
   deploy:
     working_directory: ~/callme-app-connect
