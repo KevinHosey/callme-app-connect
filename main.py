@@ -9,7 +9,7 @@ class HelloHandler(http.server.BaseHTTPRequestHandler):
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
-        print("Received data:", post_data)
+        # print("Received data:", post_data)
         sys.stdout.flush()
 
         try:
