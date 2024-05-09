@@ -32,7 +32,7 @@ commands:
       - run:
           name: Restart services on <<parameters.server_hostname>> with tag <<parameters.image_tag>>
           command: |
-            echo "Restarting learning_log service on <<parameters.server_hostname>> with kevinhosey/callme-app-connect:<<parameters.image_tag>>"
+            echo "Restarting web_app service on <<parameters.server_hostname>> with kevinhosey/callme-app-connect:<<parameters.image_tag>>"
             echo "-----------------------------------------------------------------------------------"
             ssh -t -o StrictHostKeyChecking=no ec2-user@<<parameters.server_hostname>> \
               "cd /home/ec2-user/docker && \
