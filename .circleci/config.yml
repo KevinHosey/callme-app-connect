@@ -39,7 +39,7 @@ commands:
                docker-compose -f docker-compose.yml pull docker-web_app-1 && \
                docker-compose -f docker-compose.yml up --no-deps -d docker-web_app-1"
 jobs:
-  deploy-prod:
+  deploy:
     working_directory: ~/callme-app-connect
     docker:
       - image: docker:20.10.11-git
@@ -56,7 +56,7 @@ jobs:
           image_tag: "latest"
 workflows:
   version: 2
-  production:
+  deployment:
     jobs:
       - deploy-prod:
           context:
