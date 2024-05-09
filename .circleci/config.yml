@@ -52,7 +52,7 @@ jobs:
       - build_image:
           image_tag: "latest"
       - restart_services:
-          server_hostname: "3.70.99.172"
+          server_hostname: "16.171.38.251"
           image_tag: "latest"
 workflows:
   version: 2
