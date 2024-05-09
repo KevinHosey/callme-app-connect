@@ -1,0 +1,66 @@
+version: 2.1
+
+docker-auth: &docker-auth
+  auth:
+    username: $DOCKER_USERNAME
+    password: $DOCKER_PASSWORD
+
+commands:
+  build_image:
+    parameters:
+      image_tag:
+        default: ""
+        type: string
+    steps:
+      - run:
+          name: Build and push kevinhosey/callme-app-connect:<<parameters.image_tag>>
+          command: |
+            echo "Building and pushing kevinhosey/callme-app-connect:<<parameters.image_tag>>"
+            echo "-----------------------------------------------------------------------------------"
+            docker build -t kevinhosey/callme-app-connect:<<parameters.image_tag>> .
+            echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
+            docker push kevinhosey/callme-app-connect:<<parameters.image_tag>>
+  restart_services:
+    parameters:
+      server_hostname:
+        default: ""
+        type: string
+      image_tag:
+        default: ""
+        type: string
+    steps:
+      - run:
+          name: Restart services on <<parameters.server_hostname>> with tag <<parameters.image_tag>>
+          command: |
+            echo "Restarting learning_log service on <<parameters.server_hostname>> with kevinhosey/callme-app-connect:<<parameters.image_tag>>"
+            echo "-----------------------------------------------------------------------------------"
+            ssh -t -o StrictHostKeyChecking=no ec2-user@<<parameters.server_hostname>> \
+              "cd /home/ec2-user/docker && \
+               docker-compose -f docker-compose.yml pull docker-web_app-1 && \
+               docker-compose -f docker-compose.yml up --no-deps -d docker-web_app-1"
+jobs:
+  deploy-prod:
+    working_directory: ~/callme-app-connect
+    docker:
+      - image: docker:20.10.11-git
+        <<: *docker-auth
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.11
+          docker_layer_caching: true
+      - build_image:
+          image_tag: "latest"
+      - restart_services:
+          server_hostname: "3.70.99.172"
+          image_tag: "latest"
+workflows:
+  version: 2
+  production:
+    jobs:
+      - deploy-prod:
+          context:
+            - org-global
+          filters:
+            branches:
+              only: main
