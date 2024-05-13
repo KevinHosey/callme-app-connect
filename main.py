@@ -30,10 +30,10 @@ class HelloHandler(http.server.BaseHTTPRequestHandler):
             # payload = {'url': callback_url}
             # response = requests.post(callme_url, json=payload)
 
-            if response.status_code == 200:
-                print("Callback successful.")
-            else:
-                print("Callback failed. Status code:", response.status_code)
+            # if response.status_code == 200:
+            #     print("Callback successful.")
+            # else:
+            #     print("Callback failed. Status code:", response.status_code)
             
             # Send response
            #  self.send_response(200)
