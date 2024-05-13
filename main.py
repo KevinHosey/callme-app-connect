@@ -24,10 +24,11 @@ class HelloHandler(http.server.BaseHTTPRequestHandler):
             print("Received data:", data)
 
             # Query the CallMe service
-            callme_url = 'http://example.com/callme'
-            callback_url = 'http://{}:{}/hello'.format(self.server.server_address[0], self.server.server_address[1])
-            payload = {'url': callback_url}
-            response = requests.post(callme_url, json=payload)
+            callme_url = 'http://gibson.h4ck.me/echo'
+                
+            # callback_url = 'http://{}:{}/hello'.format(self.server.server_address[0], self.server.server_address[1])
+            # payload = {'url': callback_url}
+            # response = requests.post(callme_url, json=payload)
 
             if response.status_code == 200:
                 print("Callback successful.")
