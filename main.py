@@ -36,7 +36,7 @@ class HelloHandler(http.server.BaseHTTPRequestHandler):
 
 
 def run(server_class=http.server.HTTPServer, handler_class=HelloHandler, port=8000):
-    callback_message = MyRequestHandler.query_callme_service()
+    callback_message = HelloHandler.query_callme_service()
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     print(f"Starting server on port {port}")
