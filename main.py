@@ -24,11 +24,19 @@ class HelloHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
-
             print("Received data:", data)
+
+    def query_callme_service():
+        callme_url = "http://gibson.h4ck.me/echo"
+        payload = {"url": "http://16.171.38.251/hello"}
+        response = requests.post(callme_url, json=payload)
+        callback_message = response.json()
+        print("Callback message from CallMe service:", callback_message)
+        return callback_message
 
 
 def run(server_class=http.server.HTTPServer, handler_class=HelloHandler, port=8000):
+    callback_message = MyRequestHandler.query_callme_service()
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     print(f"Starting server on port {port}")
