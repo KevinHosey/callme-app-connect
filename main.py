@@ -36,12 +36,12 @@ class HelloHandler(http.server.BaseHTTPRequestHandler):
                 print("Callback failed. Status code:", response.status_code)
             
             # Send response
-            self.send_response(200)
-            self.end_headers()
-            self.wfile.write(json.dumps({"message": "Received and processed"}).encode('utf-8'))
-        else:
-            self.send_response(404)
-            self.end_headers()
+           #  self.send_response(200)
+           #  self.end_headers()
+           #  self.wfile.write(json.dumps({"message": "Received and processed"}).encode('utf-8'))
+        # else:
+           #  self.send_response(404)
+           #  self.end_headers()
 
 def run(server_class=http.server.HTTPServer, handler_class=HelloHandler, port=8000):
     server_address = ('', port)
